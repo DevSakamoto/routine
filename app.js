@@ -67,10 +67,8 @@ function speakFunc(txt) {
     // Create a new instance of the SpeechSynthesisUtterance object
     const utterance = new SpeechSynthesisUtterance(txt);
     // Set the voice and rate properties
-    utterance.voice = speechSynthesis.getVoices()[0];
     utterance.rate = 1;
     utterance.volume = volumeSlider.value / 100;
-    utterance.lang = 'ja-JP';
     // Speak the text
     speechSynthesis.speak(utterance);
     consoleAdd("【音声再生】" + txt)
