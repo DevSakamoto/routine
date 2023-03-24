@@ -23,6 +23,7 @@ if ('speechSynthesis' in window) {
         startWork();
         speakBtn.disabled = true;
         speakBtn.innerText = "実行中";
+        pauseBtn.disabled = false;
     });
 } else {
     alert("Sorry, your browser doesn't support the Web Speech API");
@@ -193,7 +194,9 @@ function logEverySecond() {
         return;
     }
     if ((currentWorkTime - timer) % 5 == 0) {
-        speakFunc("残り" + secondsToTime(currentWorkTime - timer));
+        var sec = secondsToTime(currentWorkTime - timer);
+        if (sec == "0秒") return;
+        speakFunc("残り" + sec);
     }
 
 }
