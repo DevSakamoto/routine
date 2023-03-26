@@ -9,12 +9,48 @@ const consoleOutput = document.getElementById("consoleOutput");
 const currentWorkLabel = document.getElementById("currentWorkLabel");
 const currentProgressBar = document.getElementById("currentProgressBar");
 
+var loadData;
 var timer = 0;
 var currentWorkTime = -1;
 var _date = new Date();
 var _workArr = [];
 var timerId = 0;
+var _recordChildList = [];
 
+window.onload = function () {
+    $(document).ready(init);
+}
+
+function init() {
+    $.getJSON("data/data.json", function (data) {
+        loadData = data;
+        reload();
+    });
+}
+
+function reload() {
+    consoleAdd("init")
+    consoleAdd(JSON.stringify(loadData));
+
+    timer = 0;
+    currentWorkTime = -1;
+    _date = new Date();
+    _workArr = [];
+    timerId = 0;
+    consoleAdd(_recordChildList.length)
+
+
+    // _recordChildList.forEach(element => {
+    //     consoleAdd("deleteRow");
+    //     deleteRow(element);
+    // });
+    // _recordChildList = [];
+
+    loadData["work"].forEach(element => {
+        consoleAdd(JSON.stringify(element));
+        setUnit(element);
+    });
+}
 
 // Check if the Web Speech API is supported
 if ('speechSynthesis' in window) {
@@ -85,12 +121,14 @@ if (addRowButton != null) {
 
 function setUnit(obj) {
 
-    const newRow = document.createElement("tr");
+    const newRow = document.createElement("tr",);
+    newRow.style.backgroundColor = "yellow";
 
     _workArr.push(obj);
 
     const noColumn = document.createElement("td");
     noColumn.innerText = obj["no"];
+    noColumn.style.color = "yellow";
 
     const nameColumn = document.createElement("td");
     nameColumn.innerText = obj["name"];
@@ -101,21 +139,38 @@ function setUnit(obj) {
     const startDatteColumn = document.createElement("td");
     startDatteColumn.innerText = _date.toLocaleTimeString();
 
-    const endDatteColumn = document.createElement("td");
-    _date.setSeconds(_date.getSeconds() + timeToSeconds(obj["time"]));
-    endDatteColumn.innerText = _date.toLocaleTimeString();
+    // const endDatteColumn = document.createElement("td");
+    // _date.setSeconds(_date.getSeconds() + timeToSeconds(obj["time"]));
+    // endDatteColumn.innerText = _date.toLocaleTimeString();
+    const delColumn = document.createElement("td");
+    delColumn.innerHTML = '<button onclick="deleteRow(this.parentNode)">❌</button>'
+    // const delBtn = document.createElement("button");
+    // delBtn.innerText = "❌";
+    // delBtn.onclick = "deleteRow(this)";
+    // delColumn.appendChild(delBtn);
 
     newRow.appendChild(noColumn);
     newRow.appendChild(nameColumn);
     newRow.appendChild(timeColumn);
     newRow.appendChild(startDatteColumn);
-    newRow.appendChild(endDatteColumn);
+    //newRow.appendChild(endDatteColumn);
+    newRow.appendChild(delColumn);
+
+    _recordChildList.push(newRow)
     dataTable.tBodies[0].appendChild(newRow);
+}
+function deleteRow(button) {
+    // 削除ボタンがクリックされた行を取得
+    var row = button.parentNode;
+    consoleAdd(row);
+    // テーブルから行を削除
+    row.parentNode.removeChild(row);
 }
 
 
 function consoleAdd(txt) {
     consoleOutput.value += txt + "\n";
+    consoleOutput.scrollTop = consoleOutput.scrollHeight;
     console.log(txt);
 }
 
