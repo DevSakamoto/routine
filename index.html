@@ -30,17 +30,13 @@
 
   <div class="container mt-5">
     <img src="resource/logo_2.png" height="40">
-    <button type="button" class="btn btn-secondary" id="reloadBtn" onclick=reload()> ♲ </button>
-    <button type="button" class="btn btn-primary" id="test" onclick=test()> testボタン</button>
+    <button type="button" class="btn btn-secondary" id="reloadBtn" onclick="reload()"> ♲ </button>
+    <button type="button" class="btn btn-primary" id="test" onclick="test()"> test</button>
     <script>
       function test() {
         speakFunc("test")
-        dataTable.deleteRow(1);
-
       }
     </script>
-
-
 
     <hr>
 
@@ -48,11 +44,14 @@
     <input type="range" class="form-control-range" id="volumeSlider" min="1" max="100" value="50">
 
     <hr>
-    <button type="button" class="btn btn-secondary" id="speakBtn"> 開始ボタン </button>
-    <button type="button" class="btn btn-secondary" id="pauseBtn" disabled> ポーズボタン </button>
-    <!-- <p>Set a date and time: <input type="datetime-local" id="dateTimeInput"></p>
-    <hr> -->
+    
+    <button type="button" class="btn btn-secondary" id="speakBtn"> startBtn </button>
+    <button type="button" class="btn btn-secondary" id="pauseBtn" disabled> pauseBtn </button>
+
+    <!-- <p>Set a date and time: <input type="datetime-local" id="dateTimeInput"></p>-->
     <hr>
+    <p class="text-lg-center" id="currentWorDetailkLabel">currentWorDetailkLabel</p>
+
     <div class="progress" style="height: 35px;">
       <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 70%" aria-valuemax="100" id="currentProgressBar">
         <h4 id="currentWorkLabel">WorkName</h4>
@@ -61,7 +60,7 @@
 
 
     <!-- <button id="addRowButton">Add Row</button> -->
-    <table class="table table-hover table-dark table-sm" id="dataTable">
+    <table class="table table-hover table-dark table-sm table-bordered" id="dataTable">
       <thead>
         <tr>
           <th scope="col">順番</th>
@@ -78,8 +77,10 @@
 
 
   <!-- Optional JavaScript; choose one of the two! -->
+  <script src="js/util.js"></script>
   <script src="js/app.js"></script>
   <script src="js/script.js"></script>
+  
 
   <!-- Option 1: Bootstrap Bundle with Popper -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
