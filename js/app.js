@@ -7,6 +7,7 @@ const dataTable = document.getElementById("dataTable");
 const volumeSlider = document.getElementById("volumeSlider");
 const consoleOutput = document.getElementById("consoleOutput");
 const currentWorkLabel = document.getElementById("currentWorkLabel");
+const currentWorDetailkLabel = document.getElementById("currentWorDetailkLabel");
 const currentProgressBar = document.getElementById("currentProgressBar");
 
 var loadData;
@@ -32,12 +33,12 @@ function reload() {
     consoleAdd("init")
     consoleAdd(JSON.stringify(loadData));
 
-    timer = 0;
-    currentWorkTime = -1;
-    _date = new Date();
-    _workArr = [];
-    timerId = 0;
-    consoleAdd(_recordChildList.length)
+    // timer = 0;
+    // currentWorkTime = -1;
+    // _date = new Date();
+    // _workArr = [];
+    // timerId = 0;
+    consoleAdd(_recordChildList.length);
 
 
     // _recordChildList.forEach(element => {
@@ -52,18 +53,13 @@ function reload() {
     });
 }
 
-// Check if the Web Speech API is supported
-if ('speechSynthesis' in window) {
-    // Add event listener to the speak button
-    speakBtn.addEventListener("click", function () {
-        startWork();
-        speakBtn.disabled = true;
-        speakBtn.innerText = "実行中";
-        pauseBtn.disabled = false;
-    });
-} else {
-    alert("Sorry, your browser doesn't support the Web Speech API");
-}
+speakBtn.addEventListener("click", function () {
+    startWork();
+    speakBtn.disabled = true;
+    speakBtn.innerText = "実行中";
+    pauseBtn.disabled = false;
+});
+
 if (pauseBtn != null) {
     pauseBtn.addEventListener("click", function () {
         if (currentWorkTime == -1) {
@@ -99,19 +95,6 @@ if (startBtn != null) {
     });
 }
 
-function speakFunc(txt) {
-    // Create a new instance of the SpeechSynthesisUtterance object
-    const utterance = new SpeechSynthesisUtterance(txt);
-    // Set the voice and rate properties
-    utterance.rate = 1;
-    utterance.volume = volumeSlider.value / 100;
-    // Speak the text
-    speechSynthesis.speak(utterance);
-    consoleAdd("【音声再生】" + txt)
-}
-
-
-
 if (addRowButton != null) {
     addRowButton.addEventListener("click", function () {
         setUnit({ no: 1, name: 1, time: 1 });
@@ -121,14 +104,11 @@ if (addRowButton != null) {
 
 function setUnit(obj) {
 
-    const newRow = document.createElement("tr",);
-    newRow.style.backgroundColor = "yellow";
-
+    const newRow = document.createElement('tr');    
     _workArr.push(obj);
 
     const noColumn = document.createElement("td");
-    noColumn.innerText = obj["no"];
-    noColumn.style.color = "yellow";
+    noColumn.innerText = _workArr.length//obj["no"];
 
     const nameColumn = document.createElement("td");
     nameColumn.innerText = obj["name"];
@@ -138,42 +118,24 @@ function setUnit(obj) {
 
     const startDatteColumn = document.createElement("td");
     startDatteColumn.innerText = _date.toLocaleTimeString();
-
-    // const endDatteColumn = document.createElement("td");
-    // _date.setSeconds(_date.getSeconds() + timeToSeconds(obj["time"]));
-    // endDatteColumn.innerText = _date.toLocaleTimeString();
+    _date.setSeconds(_date.getSeconds() + timeToSeconds(obj["time"]));
     const delColumn = document.createElement("td");
     delColumn.innerHTML = '<button onclick="deleteRow(this.parentNode)">❌</button>'
-    // const delBtn = document.createElement("button");
-    // delBtn.innerText = "❌";
-    // delBtn.onclick = "deleteRow(this)";
-    // delColumn.appendChild(delBtn);
 
     newRow.appendChild(noColumn);
     newRow.appendChild(nameColumn);
     newRow.appendChild(timeColumn);
     newRow.appendChild(startDatteColumn);
-    //newRow.appendChild(endDatteColumn);
     newRow.appendChild(delColumn);
 
     _recordChildList.push(newRow)
     dataTable.tBodies[0].appendChild(newRow);
 }
 function deleteRow(button) {
-    // 削除ボタンがクリックされた行を取得
     var row = button.parentNode;
     consoleAdd(row);
-    // テーブルから行を削除
     row.parentNode.removeChild(row);
 }
-
-
-function consoleAdd(txt) {
-    consoleOutput.value += txt + "\n";
-    consoleOutput.scrollTop = consoleOutput.scrollHeight;
-    console.log(txt);
-}
-
 
 function setWork() {
     if (_workArr.length == 0) {
@@ -184,8 +146,10 @@ function setWork() {
     timer = 0;
     currentProgressBar.style.width = "0%";
     var element = _workArr[0]
+    _recordChildList[0].className = "table-warning";
     currentWorkLabel.innerText = element["name"];
     currentWorkTime = timeToSeconds(element["time"]);
+    currentWorDetailkLabel.innerText = element["name"] + element["time"];
     speakFunc(element["name"] + "を" + element["time"] + "行う")
 }
 
@@ -207,21 +171,7 @@ function timeToSeconds(timeString) {
     consoleAdd(totalSeconds);
     return totalSeconds;
 }
-function secondsToTime(seconds) {
-    let timeString = "";
-    if (seconds >= 3600) {
-        timeString += `${Math.floor(seconds / 3600)}時間`;
-        seconds %= 3600;
-    }
-    if (seconds >= 60) {
-        timeString += `${Math.floor(seconds / 60)}分`;
-        seconds %= 60;
-    }
-    if (seconds > 0 || timeString === "") {
-        timeString += `${seconds}秒`;
-    }
-    return timeString;
-}
+
 
 function startWork() {
     if (timerId != 0) {
@@ -237,12 +187,11 @@ function startWork() {
 function logEverySecond() {
 
     timer += 1;
-    //consoleAdd(timer);
     currentProgressBar.style.width = timer / currentWorkTime * 100 + "%";
-    //consoleAdd(currentProgressBar.style.width);
-
     if (timer > currentWorkTime) {
         _workArr = _workArr.slice(1);
+        _recordChildList[0].className="";
+        _recordChildList =_recordChildList.slice(1);
         setWork();
         return;
     }
@@ -251,5 +200,4 @@ function logEverySecond() {
         if (sec == "0秒") return;
         speakFunc("残り" + sec);
     }
-
 }
