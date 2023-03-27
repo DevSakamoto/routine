@@ -46,13 +46,20 @@
     <input type="range" class="form-control-range" id="volumeSlider" min="1" max="100" value="50">
 
     <hr>
-    
+
     <button type="button" class="btn btn-secondary" id="speakBtn"> startBtn </button>
     <button type="button" class="btn btn-secondary" id="pauseBtn" disabled> pauseBtn </button>
 
     <!-- <p>Set a date and time: <input type="datetime-local" id="dateTimeInput"></p>-->
     <hr>
-    <p class="text-lg-center" id="currentWorDetailkLabel">currentWorDetailkLabel</p>
+    <p class="text-lg-center">
+      <label id="currentWorkDetailLabel" style=" transform: scale(3);">currentWorkDetailLabel</label>
+    </p>
+    <p class="text-lg-center">
+      <button type="button" class="btn btn-secondary" id="backBtn"> ◀️ </button>
+      <label>　　　　　</label>
+      <button type="button" class="btn btn-secondary" id="forwardBtn"> ▶︎ </button>
+    </p>
 
     <div class="progress" style="height: 35px;">
       <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 70%" aria-valuemax="100" id="currentProgressBar">
@@ -65,11 +72,12 @@
     <table class="table table-hover table-dark table-sm table-bordered" id="dataTable">
       <thead>
         <tr>
+          <th scope="col">☑︎</th>
           <th scope="col">順番</th>
           <th scope="col">作業内容</th>
           <th scope="col">作業時間</th>
           <th scope="col">開始日時</th>
-          <th scope="col">削除</th>
+          <th scope="col">del</th>
         </tr>
       </thead>
       <tbody>
@@ -82,7 +90,7 @@
   <script src="js/util.js"></script>
   <script src="js/app.js"></script>
   <script src="js/script.js"></script>
-  
+
 
   <!-- Option 1: Bootstrap Bundle with Popper -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>

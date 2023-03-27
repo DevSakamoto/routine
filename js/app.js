@@ -7,8 +7,12 @@ const dataTable = document.getElementById("dataTable");
 const volumeSlider = document.getElementById("volumeSlider");
 const consoleOutput = document.getElementById("consoleOutput");
 const currentWorkLabel = document.getElementById("currentWorkLabel");
-const currentWorDetailkLabel = document.getElementById("currentWorDetailkLabel");
+const currentWorkDetailLabel = document.getElementById("currentWorkDetailLabel");
 const currentProgressBar = document.getElementById("currentProgressBar");
+
+const backBtn = document.getElementById("backBtn");
+const forwardBtn = document.getElementById("forwardBtn");
+
 
 var loadData;
 var timer = 0;
@@ -17,16 +21,13 @@ var _date = new Date();
 var _workArr = [];
 var timerId = 0;
 var _recordChildList = [];
+var workIndex = 0;
 
 window.onload = function () {
     $(document).ready(init);
 }
 
 function init() {
-    // $.getJSON("data/data.json", function (data) {
-    //     loadData = data;
-    //     reload();
-    // });
     consoleAdd("v0.0.2");
     var xhr = new XMLHttpRequest();
     xhr.open('GET', 'https://script.google.com/macros/s/AKfycbx7_N9Et7WblpE4q-HHeVPN-UFgZGp5VJtPficQI_TbQNxHocSHbG4Yt7ycuyxcnqni/exec', true);
@@ -40,8 +41,22 @@ function init() {
 
 }
 
+backBtn.addEventListener("click", function () {
+    indexControll(true);
+});
+forwardBtn.addEventListener("click", function () {
+    indexControll(false);
+});
+function indexControll(isBack) {
+    _recordChildList[workIndex].className = "";
+    workIndex += isBack ? -1 : 1;
+    workIndex = Math.max(0, workIndex);
+    setWork();
+}
+
+
 function reload() {
-    
+
     consoleAdd("init")
     consoleAdd(JSON.stringify(loadData));
 
@@ -108,8 +123,12 @@ if (addRowButton != null) {
 
 function setUnit(obj) {
 
-    const newRow = document.createElement('tr');    
+    const newRow = document.createElement('tr');
     _workArr.push(obj);
+
+    const checkColumn = document.createElement("td");
+    checkColumn.innerHTML = '<input type="checkbox" style=" transform: translate(10px, 3px) scale(2);">';
+
 
     const noColumn = document.createElement("td");
     noColumn.innerText = _workArr.length//obj["no"];
@@ -125,7 +144,7 @@ function setUnit(obj) {
     _date.setSeconds(_date.getSeconds() + timeToSeconds(obj["time"]));
     const delColumn = document.createElement("td");
     delColumn.innerHTML = '<button onclick="deleteRow(this.parentNode)">❌</button>'
-
+    newRow.appendChild(checkColumn);
     newRow.appendChild(noColumn);
     newRow.appendChild(nameColumn);
     newRow.appendChild(timeColumn);
@@ -142,47 +161,25 @@ function deleteRow(button) {
 }
 
 function setWork() {
-    if (_workArr.length == 0) {
+    if (_workArr.length < workIndex) {
         speakFunc("終わりです。おつかれさまでした")
         clearInterval(timerId)
         return;
     }
     timer = 0;
     currentProgressBar.style.width = "0%";
-    var element = _workArr[0]
-    _recordChildList[0].className = "table-warning";
-    currentWorkLabel.innerText = element["name"];
+    var element = _workArr[workIndex]
+    _recordChildList[workIndex].className = "table-warning";
     currentWorkTime = timeToSeconds(element["time"]);
-    currentWorDetailkLabel.innerText = element["name"] + element["time"];
+    currentWorkDetailLabel.innerText = _workArr[workIndex]["name"] + " " + formatSeconds(currentWorkTime - timer);
     speakFunc(element["name"] + "を" + element["time"] + "行う")
 }
-
-function timeToSeconds(timeString) {
-    const regex = /(\d+)\s*(時間|分|秒)?/g;
-    let match;
-    let totalSeconds = 0;
-    while ((match = regex.exec(timeString))) {
-        const value = parseInt(match[1], 10);
-        const unit = match[2];
-        if (unit === "時間") {
-            totalSeconds += value * 3600;
-        } else if (unit === "分") {
-            totalSeconds += value * 60;
-        } else if (unit === "秒" || !unit) {
-            totalSeconds += value;
-        }
-    }
-    consoleAdd(totalSeconds);
-    return totalSeconds;
-}
-
 
 function startWork() {
     if (timerId != 0) {
         consoleAdd("既にスタートしてます");
         return;
     }
-
     consoleAdd("startWork");
     setWork();
     timerId = setInterval(logEverySecond, 1000);
@@ -191,11 +188,11 @@ function startWork() {
 function logEverySecond() {
 
     timer += 1;
+    currentWorkDetailLabel.innerText = _workArr[workIndex]["name"] + " " + formatSeconds(currentWorkTime - timer);
     currentProgressBar.style.width = timer / currentWorkTime * 100 + "%";
     if (timer > currentWorkTime) {
-        _workArr = _workArr.slice(1);
-        _recordChildList[0].className="";
-        _recordChildList =_recordChildList.slice(1);
+        _recordChildList[workIndex].className = "";
+        workIndex += 1;
         setWork();
         return;
     }

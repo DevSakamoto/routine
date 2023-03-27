@@ -35,6 +35,13 @@ function secondsToTime(seconds) {
     return timeString;
 }
 
+/**秒を 00:00の表記の文字列に変換 */
+function formatSeconds(seconds) {
+    const minutes = Math.floor(seconds / 60).toString().padStart(2, '0');
+    const remainingSeconds = (seconds % 60).toString().padStart(2, '0');
+    return `${minutes}:${remainingSeconds}`;
+}
+
 function consoleAdd(txt) {
     consoleOutput.value += txt + "\n";
     scrollToBottom(consoleOutput);
