@@ -29,7 +29,7 @@ function init() {
     // });
     consoleAdd("v0.0.1");
     var xhr = new XMLHttpRequest();
-    xhr.open('GET', 'https://script.google.com/macros/s/AKfycbxodP95fzSp0zt4tvZRRYTzbM5-lJYi_yy-mp8bJC4ICC9IqgnuQVXPRPe5qDT4ws1i/exec', true);
+    xhr.open('GET', 'https://script.google.com/macros/s/AKfycbx7_N9Et7WblpE4q-HHeVPN-UFgZGp5VJtPficQI_TbQNxHocSHbG4Yt7ycuyxcnqni/exec', true);
     xhr.onreadystatechange = function () {
         if (this.readyState === 4 && this.status === 200) {
             loadData = JSON.parse(this.responseText);
