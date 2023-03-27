@@ -27,7 +27,7 @@ function init() {
     //     loadData = data;
     //     reload();
     // });
-    consoleAdd("v0.0.1");
+    consoleAdd("v0.0.2");
     var xhr = new XMLHttpRequest();
     xhr.open('GET', 'https://script.google.com/macros/s/AKfycbx7_N9Et7WblpE4q-HHeVPN-UFgZGp5VJtPficQI_TbQNxHocSHbG4Yt7ycuyxcnqni/exec', true);
     xhr.onreadystatechange = function () {
@@ -41,6 +41,7 @@ function init() {
 }
 
 function reload() {
+    
     consoleAdd("init")
     consoleAdd(JSON.stringify(loadData));
 
@@ -50,14 +51,6 @@ function reload() {
     // _workArr = [];
     // timerId = 0;
     consoleAdd(_recordChildList.length);
-
-
-    // _recordChildList.forEach(element => {
-    //     consoleAdd("deleteRow");
-    //     deleteRow(element);
-    // });
-    // _recordChildList = [];
-
     loadData["work"].forEach(element => {
         consoleAdd(JSON.stringify(element));
         setUnit(element);
