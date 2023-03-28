@@ -128,22 +128,27 @@ function setUnit(obj) {
 
     const checkColumn = document.createElement("td");
     checkColumn.innerHTML = '<label style="display:block; margin: 0;"><input type="checkbox"></label>';
-
+    checkColumn.style.textAlign = "center"
 
     const noColumn = document.createElement("td");
     noColumn.innerText = _workArr.length//obj["no"];
+    noColumn.style.textAlign = "center"
 
     const nameColumn = document.createElement("td");
     nameColumn.innerText = obj["name"];
 
     const timeColumn = document.createElement("td");
     timeColumn.innerText = obj["time"];
+    timeColumn.style.textAlign = "center"
+    timeColumn.style.fontSize= "2vmin";
 
     const startDatteColumn = document.createElement("td");
     startDatteColumn.innerText = _date.toLocaleTimeString();
     _date.setSeconds(_date.getSeconds() + timeToSeconds(obj["time"]));
     const delColumn = document.createElement("td");
     delColumn.innerHTML = '<button onclick="deleteRow(this.parentNode)">❌</button>'
+    delColumn.style.textAlign = "center"
+
     newRow.appendChild(checkColumn);
     newRow.appendChild(noColumn);
     newRow.appendChild(nameColumn);
@@ -171,6 +176,8 @@ function setWork() {
     var element = _workArr[workIndex]
     _recordChildList[workIndex].className = "table-warning";
     currentWorkTime = timeToSeconds(element["time"]);
+    currentWorkLabel.innerText = _workArr[workIndex]["name"]
+
     currentWorkDetailLabel.innerText = _workArr[workIndex]["name"] + " " + formatSeconds(currentWorkTime - timer);
     speakFunc(element["name"] + "を" + element["time"] + "行う")
 }
