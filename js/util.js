@@ -88,3 +88,17 @@ function speakFunc(txt) {
     speechSynthesis.speak(utterance);
     consoleAdd("【音声再生】" + txt)
 }
+
+function createHeader() {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        consoleAdd(this.responseText);
+        var newContent = document.createElement("nav");
+        newContent.innerHTML = this.responseText;
+        document.body.insertBefore(newContent, document.body.firstChild);
+      }
+    };
+    xhttp.open("GET", "navbar.html", true);
+    xhttp.send();
+}

@@ -25,6 +25,7 @@ var workIndex = 0;
 
 window.onload = function () {
     $(document).ready(init);
+    createHeader();
 }
 
 function init() {
