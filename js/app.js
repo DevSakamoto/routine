@@ -127,7 +127,7 @@ function setUnit(obj) {
     _workArr.push(obj);
 
     const checkColumn = document.createElement("td");
-    checkColumn.innerHTML = '<input type="checkbox" style=" transform: translate(5px, 2px) ;">';
+    checkColumn.innerHTML = '<label style="display:block; margin: 0;"><input type="checkbox"></label>';
 
 
     const noColumn = document.createElement("td");
