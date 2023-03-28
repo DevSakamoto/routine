@@ -129,13 +129,16 @@ function setUnit(obj) {
     const checkColumn = document.createElement("td");
     checkColumn.innerHTML = '<label style="display:block; margin: 0;"><input type="checkbox"></label>';
     checkColumn.style.textAlign = "center"
+    checkColumn.style.fontSize= "2vmin";
 
     const noColumn = document.createElement("td");
     noColumn.innerText = _workArr.length//obj["no"];
     noColumn.style.textAlign = "center"
+    checkColumn.style.fontSize= "2vmin";
 
     const nameColumn = document.createElement("td");
     nameColumn.innerText = obj["name"];
+    checkColumn.style.fontSize= "2vmin";
 
     const timeColumn = document.createElement("td");
     timeColumn.innerText = obj["time"];
