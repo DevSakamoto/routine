@@ -134,11 +134,11 @@ function setUnit(obj) {
     const noColumn = document.createElement("td");
     noColumn.innerText = _workArr.length//obj["no"];
     noColumn.style.textAlign = "center"
-    checkColumn.style.fontSize= "2vmin";
+    noColumn.style.fontSize= "2vmin";
 
     const nameColumn = document.createElement("td");
     nameColumn.innerText = obj["name"];
-    checkColumn.style.fontSize= "2vmin";
+    nameColumn.style.fontSize= "2vmin";
 
     const timeColumn = document.createElement("td");
     timeColumn.innerText = obj["time"];
@@ -147,16 +147,20 @@ function setUnit(obj) {
 
     const startDatteColumn = document.createElement("td");
     startDatteColumn.innerText = _date.toLocaleTimeString();
+    startDatteColumn.style.fontSize= "2vmin";
     _date.setSeconds(_date.getSeconds() + timeToSeconds(obj["time"]));
+
     const delColumn = document.createElement("td");
     delColumn.innerHTML = '<button onclick="deleteRow(this.parentNode)">❌</button>'
     delColumn.style.textAlign = "center"
+    timeColumn.style.fontSize= "2vmin";
+
 
     newRow.appendChild(checkColumn);
     newRow.appendChild(noColumn);
     newRow.appendChild(nameColumn);
     newRow.appendChild(timeColumn);
-    newRow.appendChild(startDatteColumn);
+    // newRow.appendChild(startDatteColumn);
     newRow.appendChild(delColumn);
 
     _recordChildList.push(newRow)
