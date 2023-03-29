@@ -102,3 +102,7 @@ function createHeader() {
     xhttp.open("GET", "navbar.html", true);
     xhttp.send();
 }
+
+function fadeAnimation(isIn=true) {
+    
+}

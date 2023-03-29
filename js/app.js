@@ -174,7 +174,10 @@ function deleteRow(button) {
 }
 
 function setWork() {
-    if (_workArr.length < workIndex) {
+    if (_workArr.length <= workIndex) {
+        currentWorkDetailLabel.classList.remove("fuwafuwa")
+        currentWorkDetailLabel.innerText = "終わりです。おつかれさまでした";
+
         speakFunc("終わりです。おつかれさまでした")
         clearInterval(timerId)
         return;
@@ -195,6 +198,7 @@ function startWork() {
         consoleAdd("既にスタートしてます");
         return;
     }
+    currentWorkDetailLabel.classList.add("fuwafuwa")
     consoleAdd("startWork");
     setWork();
     timerId = setInterval(logEverySecond, 1000);
