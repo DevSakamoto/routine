@@ -13,6 +13,9 @@ const currentProgressBar = document.getElementById("currentProgressBar");
 const backBtn = document.getElementById("backBtn");
 const forwardBtn = document.getElementById("forwardBtn");
 
+const callOptionDropDown = document.getElementById("callOptionDropDown");
+
+
 
 var loadData;
 var timer = 0;
@@ -29,7 +32,7 @@ window.onload = function () {
 }
 
 function init() {
-    consoleAdd("v0.0.2");
+    consoleAdd("v0.0.3");
     var xhr = new XMLHttpRequest();
     xhr.open('GET', 'https://script.google.com/macros/s/AKfycbx7_N9Et7WblpE4q-HHeVPN-UFgZGp5VJtPficQI_TbQNxHocSHbG4Yt7ycuyxcnqni/exec', true);
     xhr.onreadystatechange = function () {
@@ -39,7 +42,6 @@ function init() {
         }
     };
     xhr.send();
-
 }
 
 backBtn.addEventListener("click", function () {
@@ -59,16 +61,16 @@ function indexControll(isBack) {
 function reload() {
 
     consoleAdd("init")
-    consoleAdd(JSON.stringify(loadData));
+    //consoleAdd(JSON.stringify(loadData));
 
     // timer = 0;
     // currentWorkTime = -1;
     // _date = new Date();
     // _workArr = [];
     // timerId = 0;
-    consoleAdd(_recordChildList.length);
+    //consoleAdd(_recordChildList.length);
     loadData["work"].forEach(element => {
-        consoleAdd(JSON.stringify(element));
+        //consoleAdd(JSON.stringify(element));
         setUnit(element);
     });
 }
@@ -142,7 +144,7 @@ function setUnit(obj) {
     nameColumn.style.fontSize= "2vmin";
 
     const timeColumn = document.createElement("td");
-    timeColumn.innerText = obj["time"];
+    timeColumn.innerText = secondsToTime(obj["time"]);
     timeColumn.style.textAlign = "center"
     timeColumn.style.fontSize= "2vmin";
 
@@ -152,7 +154,7 @@ function setUnit(obj) {
     _date.setSeconds(_date.getSeconds() + timeToSeconds(obj["time"]));
 
     const delColumn = document.createElement("td");
-    delColumn.innerHTML = '<button onclick="deleteRow(this.parentNode)">❌</button>'
+    delColumn.innerHTML = '<button id="delBtn" class="btn btn-dark btn-sm" onclick="deleteRow(this.parentNode)">❌</button>'
     delColumn.style.textAlign = "center"
     timeColumn.style.fontSize= "2vmin";
 
@@ -169,15 +171,22 @@ function setUnit(obj) {
 }
 function deleteRow(button) {
     var row = button.parentNode;
-    consoleAdd(row);
+    var rowIndex = _recordChildList.indexOf(row);
+    consoleAdd(_recordChildList.indexOf(row));
+    consoleAdd(row + " " + workIndex);
+    if(rowIndex <= workIndex){
+        consoleAdd("実行中 or 完了済みなので消せません");
+        return;
+    }
     row.parentNode.removeChild(row);
+    _recordChildList.splice(rowIndex,1)
+    _workArr = tableToObject(dataTable);
 }
 
 function setWork() {
     if (_workArr.length <= workIndex) {
         currentWorkDetailLabel.classList.remove("fuwafuwa")
         currentWorkDetailLabel.innerText = "終わりです。おつかれさまでした";
-
         speakFunc("終わりです。おつかれさまでした")
         clearInterval(timerId)
         return;
@@ -189,7 +198,7 @@ function setWork() {
     currentWorkTime = timeToSeconds(element["time"]);
     currentWorkLabel.innerText = _workArr[workIndex]["name"]
 
-    currentWorkDetailLabel.innerText = _workArr[workIndex]["name"] + " " + formatSeconds(currentWorkTime - timer);
+    currentWorkDetailLabel.innerText = _workArr[workIndex]["name"] + " " + secondsToTime(currentWorkTime - timer);
     speakFunc(element["name"] + "を" + element["time"] + "行う")
 }
 
@@ -207,7 +216,8 @@ function startWork() {
 function logEverySecond() {
 
     timer += 1;
-    currentWorkDetailLabel.innerText = _workArr[workIndex]["name"] + " " + formatSeconds(currentWorkTime - timer);
+    currentWorkDetailLabel.innerText = _workArr[workIndex]["name"] + " " + secondsToTime(currentWorkTime - timer);
+    currentWorkDetailLabel.innerText += (timer / currentWorkTime * 100).toFixed(1) + "%経過"
     currentProgressBar.style.width = timer / currentWorkTime * 100 + "%";
     if (timer > currentWorkTime) {
         _recordChildList[workIndex].className = "";
@@ -215,9 +225,20 @@ function logEverySecond() {
         setWork();
         return;
     }
-    if ((currentWorkTime - timer) % 5 == 0) {
+    
+    if ((currentWorkTime - timer) % parseInt(callOptionDropDown.value) == 0) {
         var sec = secondsToTime(currentWorkTime - timer);
         if (sec == "0秒") return;
         speakFunc("残り" + sec);
     }
 }
+
+$(function () {
+    consoleAdd("callOptionDropDown")
+      $('.dropdown-menu .dropdown-item').click(function () {
+          var visibleItem = $('.dropdown-toggle', $(this).closest('.dropdown'));
+          visibleItem.text($(this).text());
+          visibleItem.attr('value', $(this).attr('value'))
+          speakFunc(callOptionDropDown.value);
+      });
+  });

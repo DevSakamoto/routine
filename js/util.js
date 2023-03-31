@@ -19,6 +19,9 @@ function timeToSeconds(timeString) {
 
 /**int -> 日本語表記の　時間　分　秒に変換する関数 */
 function secondsToTime(seconds) {
+    if(isNaN(seconds)){
+        return seconds;
+    }
     let timeString = "";
     if (seconds >= 3600) {
         timeString += `${Math.floor(seconds / 3600)}時間`;
@@ -42,8 +45,14 @@ function formatSeconds(seconds) {
     return `${minutes}:${remainingSeconds}`;
 }
 
-function consoleAdd(txt) {
-    consoleOutput.value += txt + "\n";
+function consoleAdd(txt,isJSON=false) {
+    if(isJSON){
+        consoleOutput.value += JSON.stringify(txt) + "\n";
+    }else
+    {
+        consoleOutput.value += txt + "\n";
+    }
+    
     scrollToBottom(consoleOutput);
     console.log(txt);
 }
@@ -85,6 +94,7 @@ function speakFunc(txt) {
     utterance.rate = 1;
     utterance.volume = volumeSlider.value / 100;
     // Speak the text
+    speechSynthesis.cancel()
     speechSynthesis.speak(utterance);
     consoleAdd("【音声再生】" + txt)
 }
@@ -93,7 +103,7 @@ function createHeader() {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
-        consoleAdd(this.responseText);
+        //consoleAdd(this.responseText);
         var newContent = document.createElement("nav");
         newContent.innerHTML = this.responseText;
         document.body.insertBefore(newContent, document.body.firstChild);
@@ -103,6 +113,19 @@ function createHeader() {
     xhttp.send();
 }
 
-function fadeAnimation(isIn=true) {
-    
-}
+function tableToObject(table) {
+    // テーブルのヘッダー行から、各列のキーを抽出する
+    const headers = Array.from(table.rows[0].cells).map(cell => cell.textContent.trim());
+  
+    // テーブルの2行目以降から、各行をオブジェクトに変換して配列に格納する
+    const rows = Array.from(table.rows).slice(1);
+    const objects = rows.map(row => {
+      const obj = {};
+      Array.from(row.cells).forEach((cell, index) => {
+        obj[headers[index]] = cell.textContent.trim();
+      });
+      return obj;
+    });
+  
+    return objects;
+  }
