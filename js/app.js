@@ -15,6 +15,9 @@ const forwardBtn = document.getElementById("forwardBtn");
 
 const callOptionDropDown = document.getElementById("callOptionDropDown");
 
+const routineIdDropDown = document.getElementById("routineIdDropDown");
+
+
 
 
 var loadData;
@@ -25,6 +28,8 @@ var _workArr = [];
 var timerId = 0;
 var _recordChildList = [];
 var workIndex = 0;
+var routineId;
+var routineIdList = [];
 
 window.onload = function () {
     $(document).ready(init);
@@ -37,7 +42,26 @@ function init() {
     xhr.open('GET', 'https://script.google.com/macros/s/AKfycbx7_N9Et7WblpE4q-HHeVPN-UFgZGp5VJtPficQI_TbQNxHocSHbG4Yt7ycuyxcnqni/exec', true);
     xhr.onreadystatechange = function () {
         if (this.readyState === 4 && this.status === 200) {
+            routineId = getParameterByName("routine_id");
+            if(routineId == null){
+                routineId = "def"
+            }
+            consoleAdd(routineId);
             loadData = JSON.parse(this.responseText);
+            loadData["work"].forEach(element => {
+                if(element["routine_id"] == routineId){
+                    setUnit(element);
+                }
+                if(routineIdList.indexOf(element["routine_id"]) == -1 && element["routine_id"] != "def"){
+                    routineIdList.push(element["routine_id"]);
+                    const newRow = document.createElement("li");
+                    newRow.innerHTML = '<button class="dropdown-item" id ="routineId" value='+element["routine_id"]+'>'+element["routine_id"]+'</button>';
+                    routineIdDropDown.appendChild(newRow);
+                }
+                //consoleAdd(JSON.stringify(element));
+                
+            });
+            setFunc();
             reload();
         }
     };
@@ -63,15 +87,26 @@ function reload() {
     consoleAdd("init")
     //consoleAdd(JSON.stringify(loadData));
 
-    // timer = 0;
-    // currentWorkTime = -1;
-    // _date = new Date();
-    // _workArr = [];
-    // timerId = 0;
+    timer = 0;
+    currentWorkTime = -1;
+    _date = new Date();
+    _workArr = [];
+    if (timerId != 0) {
+        clearInterval(timerId);
+        timerId = 0;
+        pauseBtn.innerText = "pausing";
+        speakFunc("pauseしました");
+    } 
+    timerId = 0;
+    
+
     //consoleAdd(_recordChildList.length);
     loadData["work"].forEach(element => {
+        if(element["routine_id"] == routineId){
+            setUnit(element);
+        }
         //consoleAdd(JSON.stringify(element));
-        setUnit(element);
+        
     });
 }
 
@@ -134,10 +169,10 @@ function setUnit(obj) {
     checkColumn.style.textAlign = "center"
     checkColumn.style.fontSize= "2vmin";
 
-    const noColumn = document.createElement("td");
-    noColumn.innerText = _workArr.length//obj["no"];
-    noColumn.style.textAlign = "center"
-    noColumn.style.fontSize= "2vmin";
+    // const noColumn = document.createElement("td");
+    // noColumn.innerText = _workArr.length//obj["no"];
+    // noColumn.style.textAlign = "center"
+    // noColumn.style.fontSize= "2vmin";
 
     const nameColumn = document.createElement("td");
     nameColumn.innerText = obj["name"];
@@ -160,7 +195,7 @@ function setUnit(obj) {
 
 
     newRow.appendChild(checkColumn);
-    newRow.appendChild(noColumn);
+    //newRow.appendChild(noColumn);
     newRow.appendChild(nameColumn);
     newRow.appendChild(timeColumn);
     // newRow.appendChild(startDatteColumn);
@@ -233,12 +268,23 @@ function logEverySecond() {
     }
 }
 
-$(function () {
+function setFunc() {
     consoleAdd("callOptionDropDown")
       $('.dropdown-menu .dropdown-item').click(function () {
           var visibleItem = $('.dropdown-toggle', $(this).closest('.dropdown'));
           visibleItem.text($(this).text());
           visibleItem.attr('value', $(this).attr('value'))
-          speakFunc(callOptionDropDown.value);
+          if(this.id == "routineId")
+          {
+            _recordChildList.forEach(element => {
+                element.parentNode.removeChild(element);
+                
+            });
+            _recordChildList = [];
+            routineId = $(this).attr('value');
+            reload();
+
+          }
+
       });
-  });
+  };

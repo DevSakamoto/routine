@@ -28,7 +28,7 @@
 <body>
 
 
-  <div class="fixed-bottom" style="animation: out 1.0s infinite;">
+  <div class="fixed-bottom" style="display: none;">
     <div class="form-group">
       <label for="consoleOutput bg-light" style="font-size: 8px;">Console Output:</label>
       <textarea class="form-control" id="consoleOutput" rows="10" style="font-size: 8px;"></textarea>
@@ -36,28 +36,14 @@
   </div>
 
   <div class="container mt-5">
-    
-    <button type="button" class="btn btn-secondary" id="reloadBtn" onclick="location.reload()"> ♲ </button>
-    <button type="button" class="btn btn-primary" id="test" onclick="test()"> test</button>
-    <script>
-      function test() {
-        speakFunc("test");
-        const dataTable = document.getElementById("dataTable");
-        consoleAdd(JSON.stringify(tableToObject(dataTable)));
-      }
-    </script>
-
-    <hr>
-
     <label for="volumeSlider">🔊</label>
     <input type="range" class="form-control-range" id="volumeSlider" min="1" max="100" value="50">
-
-    <hr>
-
-    <button type="button" class="btn btn-secondary" id="speakBtn"> startBtn </button>
-    <button type="button" class="btn btn-secondary" id="pauseBtn" disabled> pauseBtn </button>
-    <div class="dropdown">
-      残り時間読み上げ：
+      　ルーチン選択：
+      <button type="button" id ="callOptionDropDown" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">def</button>
+      <ul class="dropdown-menu" id="routineIdDropDown">
+        <li><button class="dropdown-item" id ="routineId" value="def">def</button></li>
+      </ul>
+      　読み周期：
       <button type="button" id ="callOptionDropDown" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">なし default</button>
       <ul class="dropdown-menu">
         <li><button class="dropdown-item" value="999999999999999999">なし default</button></li>
@@ -66,13 +52,17 @@
         <li><button class="dropdown-item" value="60">1分毎</button></li>
         <li><button class="dropdown-item" value="120">2分毎</button></li>
       </ul>
-  </div>
+    <hr>
+
+    <button type="button" class="btn btn-secondary" id="speakBtn"> startBtn </button>
+    <button type="button" class="btn btn-secondary" id="pauseBtn" disabled> pauseBtn </button>
+
 
 
     <!-- <p>Set a date and time: <input type="datetime-local" id="dateTimeInput"></p>-->
     <hr>
     <p  class="text-lg-center" >
-      <label id="currentWorkDetailLabel" style="font-weight: bolder; font-size: 24pt;">currentWorkDetailLabel</label>
+      <label id="currentWorkDetailLabel" style="font-weight: bolder; font-size: 24pt;">現在のタスク</label>
     </p>
     <p class="text-lg-center">
       <button type="button" class="btn btn-secondary" id="backBtn"> ◀︎ </button>
@@ -92,7 +82,7 @@
       <thead>
         <tr>
           <th scope="col" style="text-align: center;font-size: 1.5vmin;font-weight:lighter;">check</th>
-          <th scope="col" style="text-align: center;font-size: 1.5vmin;font-weight:lighter;">no</th>
+          <!-- <th scope="col" style="text-align: center;font-size: 1.5vmin;font-weight:lighter;">no</th> -->
           <th scope="col" style="text-align: center;font-size: 1.5vmin;font-weight:lighter;">name</th>
           <th scope="col" style="text-align: center;font-size: 1.5vmin;font-weight:lighter;">time</th>
           <!-- <th scope="col" style="text-align: center;font-size: 1.5vmin;font-weight:lighter;">開始日時</th> -->
