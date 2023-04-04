@@ -49,17 +49,12 @@ function init() {
             consoleAdd(routineId);
             loadData = JSON.parse(this.responseText);
             loadData["work"].forEach(element => {
-                if(element["routine_id"] == routineId){
-                    setUnit(element);
-                }
                 if(routineIdList.indexOf(element["routine_id"]) == -1 && element["routine_id"] != "def"){
                     routineIdList.push(element["routine_id"]);
                     const newRow = document.createElement("li");
                     newRow.innerHTML = '<button class="dropdown-item" id ="routineId" value='+element["routine_id"]+'>'+element["routine_id"]+'</button>';
                     routineIdDropDown.appendChild(newRow);
                 }
-                //consoleAdd(JSON.stringify(element));
-                
             });
             setFunc();
             reload();
