@@ -268,7 +268,7 @@ function setFunc() {
       $('.dropdown-menu .dropdown-item').click(function () {
           var visibleItem = $('.dropdown-toggle', $(this).closest('.dropdown'));
           visibleItem.text($(this).text());
-          visibleItem.attr('value', $(this).attr('value'))
+          visibleItem.attr('value', $(this).attr('value'));
           if(this.id == "routineId")
           {
             _recordChildList.forEach(element => {
