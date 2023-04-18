@@ -1,0 +1,28 @@
+img{
+    aspect-ratio: 1;
+    width: 700px;
+
+    object-position: center;
+
+    background-color: black;
+}
+
+.cover {
+    object-fit: cover;
+}
+
+.contain {
+    object-fit: contain;
+}
+
+.fill {
+    object-fit: fill;
+}
+
+.none {
+    object-fit: none;
+}
+
+.scale-down {
+    object-fit: scale-down;
+}

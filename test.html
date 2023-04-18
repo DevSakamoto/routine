@@ -1,59 +1,66 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>メンバー紹介ページ</title>
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>バレーボールメンバーページ</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <!-- 自作 CSS -->
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
-    <div class="container">
-        <h1>メンバー紹介</h1>
-        <div class="card-columns"></div>
-        <div class="row">
-            <div class="col-md-2 mb-2">
-                <div class="card">
-                    <img src="https://pbs.twimg.com/profile_images/1599613410173341696/kbYOIdzE_400x400.jpg" class="card-img-top" alt="メンバー1">
-                    <div class="card-body">
-                        <h5 class="card-title">しおぴ</h5>
-                        <p class="card-text">★</p>
-                        <p class="card-text">★</p>
-                        <p class="card-text">★</p>
-                        <p class="card-text">★</p>
-                        <p class="card-text">★</p>
-                        <a href="#" class="btn btn-primary">詳細を見る</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-2 mb-2">
-                <div class="card">
-                    <img src="member2.jpg" class="card-img-top" alt="メンバー2">
-                    <div class="card-body">
-                        <h5 class="card-title">メンバー2</h5>
-                        <p class="card-text">紹介文など</p>
-                        <a href="#" class="btn btn-primary">詳細を見る</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-2 mb-2">
-                <div class="card">
-                    <img src="member3.jpg" class="card-img-top" alt="メンバー3">
-                    <div class="card-body">
-                        <h5 class="card-title">メンバー3</h5>
-                        <p class="card-text">紹介文など</p>
-                        <a href="#" class="btn btn-primary">詳細を見る</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <!-- Bootstrap JavaScript -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<body>
+  <div class="container-fluid">
+    <h3>バレーボールメンバーページ</h3>
+    <div class="card-columns"></div>
+    <div class="row" id="output"></div>
+  </div>
+
+  <!-- Bootstrap JavaScript -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <script>
+    var loadData;
+    function init() {
+      var xhr = new XMLHttpRequest();
+      xhr.open('GET', 'https://docs.google.com/spreadsheets/d/1ntRLq7cuneQYNULNtV8tq7QQlk3DmQcuuuOmVXAlCsc/export?format=csv', true);
+      xhr.onreadystatechange = function () {
+        if (this.readyState === 4 && this.status === 200) {
+          loadData = this.responseText.split("\r\n");
+          console.log("done")
+          for (let index = 1; index <= loadData.length; index++) {
+            var mData = loadData[index].split(",");
+            var record = document.createElement("div");
+            record.className = "col-md-4 mb-4";
+            record.innerHTML = temp;
+            record.innerHTML = record.innerHTML.replace(/{name}/g,mData[0])
+            record.innerHTML = record.innerHTML.replace(/{レシーブ}/g,parceStar(mData[1]));
+            record.innerHTML = record.innerHTML.replace(/{セットアップ}/g,parceStar(mData[2]));
+            record.innerHTML = record.innerHTML.replace(/{スパイク}/g,parceStar(mData[3]));
+            record.innerHTML = record.innerHTML.replace(/{サーブ}/g,parceStar(mData[4]));
+            record.innerHTML = record.innerHTML.replace(/{高さ}/g,parceStar(mData[5]));
+            record.innerHTML = record.innerHTML.replace(/{info}/g,mData[6])
+            record.innerHTML = record.innerHTML.replace(/{img}/g,mData[7])
+            output.appendChild(record);
+          }
+        };
+      };
+      xhr.send();
+    }
+    init();
+    var temp = '<div class="card"><img src="{img}" class="card-img-top cover" alt="メンバー1"><div class="card-body"><h5 class="card-title"><b>{name}</b></h5><p class="card-text">{info}</p><table class="table"><tbody><tr><th scope="row">レシーブ</th><td>{レシーブ}</td></tr><tr><th scope="row">セットアップ</th><td>{セットアップ}</td></tr><tr><th scope="row">スパイク</th><td>{スパイク}</td></tr><tr><th scope="row">サーブ</th><td>{サーブ}</td></tr><tr><th scope="row">高さ</th><td>{高さ}</td></tr></tbody></table><p></p></div></div>';
+    var output = document.getElementById("output");
+    function parceStar(num) {
+      var ret = num+" ";
+      for (let index = 0; index < num; index++) {
+        ret += "★";
+      }
+      return ret;
+    }
+  </script>
 </body>
+
 </html>
