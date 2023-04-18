@@ -8,6 +8,14 @@ img{
 }
 
 .cover {
+    
+    aspect-ratio: 1;
+
+    width: 700px;
+
+    object-position: center;
+
+    background-color: black;
     object-fit: cover;
 }
 

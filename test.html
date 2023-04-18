@@ -8,12 +8,15 @@
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <!-- 自作 CSS -->
-    <link rel="stylesheet" href="style.css">
+    <!-- <link rel="stylesheet" href="style.css"> -->
+    
 </head>
 
 <body>
   <div class="container-fluid">
-    <h3>バレーボールメンバーページ</h3>
+    <h3>バレーボールメンバーページ </h3>
+    <p style="color: darkgrey;">画像はHADOランキングページ(例:D https://hado-official.com/wp-content/uploads/wachawacha_d.jpg) <- なければTwitterの投稿から（例:
+      なお https://pbs.twimg.com/media/FtVMRHkacAI1G07?format=jpg）ダウンロード先から画像が消えたらこちらのページの画像も消えます</p>
     <div class="card-columns"></div>
     <div class="row" id="output"></div>
   </div>
@@ -22,9 +25,11 @@
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <script src="js/util.js"></script>
   <script>
     var loadData;
     function init() {
+      createHeader();
       var xhr = new XMLHttpRequest();
       xhr.open('GET', 'https://docs.google.com/spreadsheets/d/1ntRLq7cuneQYNULNtV8tq7QQlk3DmQcuuuOmVXAlCsc/export?format=csv', true);
       xhr.onreadystatechange = function () {
