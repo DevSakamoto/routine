@@ -4,19 +4,28 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>バレーボールメンバーページ</title>
+  <title>バレー🏐</title>
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <!-- 自作 CSS -->
-    <!-- <link rel="stylesheet" href="style.css"> -->
+    <link rel="stylesheet" href="style.css">
     
 </head>
 
 <body>
   <div class="container-fluid">
-    <h3>バレーボールメンバーページ </h3>
-    <p style="color: darkgrey;">画像はHADOランキングページ(例:D https://hado-official.com/wp-content/uploads/wachawacha_d.jpg) <- なければTwitterの投稿から（例:
-      なお https://pbs.twimg.com/media/FtVMRHkacAI1G07?format=jpg）ダウンロード先から画像が消えたらこちらのページの画像も消えます</p>
+    <h3>バレー🏐 </h3>
+    <a href="#Page説明" data-toggle="collapse">Page説明</a>
+    <div id="Page説明" class="collapse">
+      レシーブ：ディグの上手さ<br>
+      セットアップ：トスの上手さ<br>
+      スパイク：スパイクの上手さ<br>
+      サーブ：サーブの上手さ<br>
+      高さ：身長、ジャンプ加味の高さ<br>
+      <a href="https://w-yoyaku-fujimi-city.seagulloffice.com/stagia/reserve/gin_menu">富士見市総合体育館予約ページ</a>
+      <p style="color: darkgrey;font-size: xx-small;">画像はHADOランキングページ(例:D https://hado-official.com/wp-content/uploads/wachawacha_d.jpg) <-
+          なければTwitterの投稿から（例: なお https://pbs.twimg.com/media/FtVMRHkacAI1G07?format=jpg）ダウンロード先から画像が消えたらこちらのページの画像も消えます</p>
+    </div>    
     <div class="card-columns"></div>
     <div class="row" id="output"></div>
   </div>
@@ -47,8 +56,9 @@
             record.innerHTML = record.innerHTML.replace(/{スパイク}/g,parceStar(mData[3]));
             record.innerHTML = record.innerHTML.replace(/{サーブ}/g,parceStar(mData[4]));
             record.innerHTML = record.innerHTML.replace(/{高さ}/g,parceStar(mData[5]));
-            record.innerHTML = record.innerHTML.replace(/{info}/g,mData[6])
-            record.innerHTML = record.innerHTML.replace(/{img}/g,mData[7])
+            record.innerHTML = record.innerHTML.replace(/{合計}/g, mData[6]);
+            record.innerHTML = record.innerHTML.replace(/{info}/g,mData[7])
+            record.innerHTML = record.innerHTML.replace(/{img}/g,mData[8])
             output.appendChild(record);
           }
         };
@@ -56,7 +66,7 @@
       xhr.send();
     }
     init();
-    var temp = '<div class="card"><img src="{img}" class="card-img-top cover" alt="メンバー1"><div class="card-body"><h5 class="card-title"><b>{name}</b></h5><p class="card-text">{info}</p><table class="table"><tbody><tr><th scope="row">レシーブ</th><td>{レシーブ}</td></tr><tr><th scope="row">セットアップ</th><td>{セットアップ}</td></tr><tr><th scope="row">スパイク</th><td>{スパイク}</td></tr><tr><th scope="row">サーブ</th><td>{サーブ}</td></tr><tr><th scope="row">高さ</th><td>{高さ}</td></tr></tbody></table><p></p></div></div>';
+    var temp = '<div class="card"><img src="{img}" class="card-img-top cover" alt="メンバー1"><div class="card-body"><h5 class="card-title"><b>{name}【{合計}】</b></h5><p class="card-text">{info}</p><table class="table"><tbody><tr><th scope="row">レシーブ</th><td>{レシーブ}</td></tr><tr><th scope="row">セットアップ</th><td>{セットアップ}</td></tr><tr><th scope="row">スパイク</th><td>{スパイク}</td></tr><tr><th scope="row">サーブ</th><td>{サーブ}</td></tr><tr><th scope="row">高さ</th><td>{高さ}</td></tr></tbody></table><p></p></div></div>';
     var output = document.getElementById("output");
     function parceStar(num) {
       var ret = num+" ";
