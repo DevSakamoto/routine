@@ -72,9 +72,10 @@
     init();
     setFunc()
 
-    var temp = '<div class="card"><img src="{img}" class="card-img-top cover" alt="メンバー1"><div class="card-body"><h5 class="card-title"><b>{name}【{合計}】</b></h5><p class="card-text">{info}</p><table class="table"><tbody><tr><th scope="row">レシーブ</th><td>{レシーブ}</td></tr><tr><th scope="row">セットアップ</th><td>{セットアップ}</td></tr><tr><th scope="row">スパイク</th><td>{スパイク}</td></tr><tr><th scope="row">サーブ</th><td>{サーブ}</td></tr><tr><th scope="row">高さ</th><td>{高さ}</td></tr></tbody></table><p style = "color:lightgray">{date}</p></div></div>';
+    var temp = '<div class="card"><img src="{img}" class="card-img-top cover" alt="メンバー1"><div class="card-body"><h5 class="card-title"><b>{name}【{合計}】</b></h5><p class="card-text">{info}</p><table class="table"><tbody><tr><th scope="row">レシーブ</th><td>{レシーブ}<div class="progress"><div class="progress-bar bg-success" role="progressbar" style="width: {レシーブ}%"></div></div></td></tr><tr><th scope="row">セットアップ</th><td>{セットアップ}<div class="progress"><div class="progress-bar bg-info" role="progressbar" style="width: {セットアップ}%"></div></div></td></tr><tr><th scope="row">スパイク</th><td>{スパイク}<div class="progress"><div class="progress-bar bg-warning" role="progressbar" style="width: {スパイク}%"></div></div></td></tr><tr><th scope="row">サーブ</th><td>{サーブ}<div class="progress"><div class="progress-bar bg-success" role="progressbar" style="width: {サーブ}%"></div></div></td></tr><tr><th scope="row">高さ</th><td>{高さ}<div class="progress"><div class="progress-bar bg-dark" role="progressbar" style="width: {高さ}%"></div></div></td></tr></tbody></table><p style = "color:lightgray">{date}</p></div></div>';
     var output = document.getElementById("output");
     function parceStar(num) {
+      return num;
       var ret = num + " ";
       for (let index = 0; index < num; index++) {
         ret += "★";
@@ -101,7 +102,7 @@
       var formatted = `
         ${d.getFullYear()}-${(d.getMonth() + 1).toString().padStart(2, '0')}-${d.getDate().toString().padStart(2, '0')}
         `.replace(/\n|\r/g, '');
-        loadData = loadData.sort((a, b) => b.split(",")[sortValue] - a.split(",")[sortValue]);
+        loadData = loadData.sort((a, b) => a.split(",")[sortValue] - b.split(",")[sortValue]);
       for (let index = 0; index < loadData.length; index++) {
         var mData = loadData[index].split(",");
         var record = document.createElement("div");
