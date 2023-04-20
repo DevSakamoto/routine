@@ -4,3 +4,9 @@
     background-color: black;
     object-fit: cover;
 }
+
+@media print {
+    .hideInPrint{
+      display: none;
+    }
+  }

@@ -14,6 +14,7 @@
 
 <body>
   <div class="container-fluid">
+    <div class ="hideInPrint">
     <h3>バレー🏐 </h3>
     <a href="#Page説明" data-toggle="collapse">Page説明</a>
     <div id="Page説明" class="collapse">
@@ -45,6 +46,7 @@
         <li><button class="dropdown-item" value="6">合計</button></li>
       </ul>
     </div>
+    </div>
     <div class="row" id="output"></div>
   </div>
 
@@ -74,7 +76,7 @@
     init();
     setFunc()
 
-    var temp = '<div class="card"><img src="{img}" class="card-img-top cover" alt="メンバー1"><div class="card-body"><h5 class="card-title"><b>{name}【{合計}】</b></h5><p class="card-text">{info}</p><table class="table"><tbody><tr><th scope="row">レシーブ</th><td>{レシーブ}</td></tr><tr><th scope="row">トス</th><td>{トス}</td></tr><tr><th scope="row">スパイク</th><td>{スパイク}</td></tr><tr><th scope="row">サーブ</th><td>{サーブ}</td></tr><tr><th scope="row" style="width: 25%">高さ</th><td>{高さ}</td></tr></tbody></table><p style = "color:lightgray">{date}</p></div></div>';
+    var temp = '<div class="card"><img src="{img}" class="card-img-top cover" alt="メンバー1"><div class="card-body"><h5 class="card-title"><b>{name}【{合計}】</b></h5><p class="card-text">{info}</p><table class="table"><tbody><tr><th scope="row">レシーブ</th><td>{レシーブ}</td></tr><tr><th scope="row">トス</th><td>{トス}</td></tr><tr><th scope="row">スパイク</th><td>{スパイク}</td></tr><tr><th scope="row">サーブ</th><td>{サーブ}</td></tr><tr><th scope="row" style="width: 40%">高さ</th><td>{高さ}</td></tr></tbody></table><p style = "color:lightgray">{date}</p></div></div>';
     function parceStar(num) {
       var ret = num + " ";
       for (let index = 0; index < num; index++) {
