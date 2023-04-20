@@ -17,13 +17,15 @@
     <h3>バレー🏐 </h3>
     <a href="#Page説明" data-toggle="collapse">Page説明</a>
     <div id="Page説明" class="collapse">
-      名前【パラメータ合計】<br>
-      説明<br>
-      レシーブ：ディグの上手さ<br>
-      セットアップ：トスの上手さ<br>
-      スパイク：スパイクの上手さ<br>
-      サーブ：サーブの上手さ<br>
-      高さ：身長、ジャンプ加味の高さ<br>
+      <div class="border" style="padding:10px;">
+        <b>名前</b>【<b>パラメータ合計</b>】<br>
+       <b>説明</b>（メンバー固有の説明文）<br>
+       <b>レシーブ</b>：ディグの上手さ（安定感、精度）<br>
+       <b>セットアップ</b>：トスの上手さ（安定感、精度）<br>
+       <b>スパイク</b>：スパイクの上手さ（安定感、コントロール、パワー、得点力）<br>
+       <b>サーブ</b>：サーブの上手さ（安定感、コントロール、パワー、得点力）<br>
+       <b>高さ</b>：身長、ジャンプ、到達する高さを使いこなせているか<br>
+      </div>
       <a href="https://w-yoyaku-fujimi-city.seagulloffice.com/stagia/reserve/gin_menu">富士見市総合体育館予約ページ</a>
       <p style="color: darkgrey;font-size: xx-small;">画像はHADOランキングページ(例:D
         https://hado-official.com/wp-content/uploads/wachawacha_d.jpg) <- なければTwitterの投稿から（例: なお
@@ -61,7 +63,7 @@
       xhr.onreadystatechange = function () {
         if (this.readyState === 4 && this.status === 200) {
           loadData = this.responseText.split("\r\n");
-          loadData.splice(0,1);
+          loadData.splice(0, 1);
           console.log("done")
           creatContents()
 
@@ -72,7 +74,7 @@
     init();
     setFunc()
 
-    var temp = '<div class="card"><img src="{img}" class="card-img-top cover" alt="メンバー1"><div class="card-body"><h5 class="card-title"><b>{name}【{合計}】</b></h5><p class="card-text">{info}</p><table class="table"><tbody><tr><th scope="row">レシーブ</th><td>{レシーブ}<div class="progress"><div class="progress-bar bg-success" role="progressbar" style="width: {レシーブ}%"></div></div></td></tr><tr><th scope="row">セットアップ</th><td>{セットアップ}<div class="progress"><div class="progress-bar bg-info" role="progressbar" style="width: {セットアップ}%"></div></div></td></tr><tr><th scope="row">スパイク</th><td>{スパイク}<div class="progress"><div class="progress-bar bg-warning" role="progressbar" style="width: {スパイク}%"></div></div></td></tr><tr><th scope="row">サーブ</th><td>{サーブ}<div class="progress"><div class="progress-bar bg-success" role="progressbar" style="width: {サーブ}%"></div></div></td></tr><tr><th scope="row">高さ</th><td>{高さ}<div class="progress"><div class="progress-bar bg-dark" role="progressbar" style="width: {高さ}%"></div></div></td></tr></tbody></table><p style = "color:lightgray">{date}</p></div></div>';
+    var temp = '<div class="card"><img src="{img}" class="card-img-top cover" alt="メンバー1"><div class="card-body"><h5 class="card-title"><b>{name}【{合計}】</b></h5><p class="card-text">{info}</p><table class="table"><tbody><tr><th scope="row" style="width: 30%">レシーブ</th><td>{レシーブ}<div class="progress"><div class="progress-bar bg-success" role="progressbar" style="width: {レシーブ}%"></div></div></td></tr><tr><th scope="row">セットアップ</th><td>{セットアップ}<div class="progress"><div class="progress-bar bg-info" role="progressbar" style="width: {セットアップ}%"></div></div></td></tr><tr><th scope="row">スパイク</th><td>{スパイク}<div class="progress"><div class="progress-bar bg-warning" role="progressbar" style="width: {スパイク}%"></div></div></td></tr><tr><th scope="row">サーブ</th><td>{サーブ}<div class="progress"><div class="progress-bar" role="progressbar" style="width: {サーブ}%"></div></div></td></tr><tr><th scope="row">高さ</th><td>{高さ}<div class="progress"><div class="progress-bar bg-dark" role="progressbar" style="width: {高さ}%"></div></div></td></tr></tbody></table><p style = "color:lightgray">{date}</p></div></div>';
     var output = document.getElementById("output");
     function parceStar(num) {
       return num;
@@ -102,7 +104,7 @@
       var formatted = `
         ${d.getFullYear()}-${(d.getMonth() + 1).toString().padStart(2, '0')}-${d.getDate().toString().padStart(2, '0')}
         `.replace(/\n|\r/g, '');
-        loadData = loadData.sort((a, b) => a.split(",")[sortValue] - b.split(",")[sortValue]);
+      loadData = loadData.sort((a, b) => a.split(",")[sortValue] - b.split(",")[sortValue]);
       for (let index = 0; index < loadData.length; index++) {
         var mData = loadData[index].split(",");
         var record = document.createElement("div");
