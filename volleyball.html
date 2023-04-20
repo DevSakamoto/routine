@@ -19,12 +19,12 @@
     <div id="Page説明" class="collapse">
       <div class="border" style="padding:10px;">
         <b>名前</b>【<b>パラメータ合計</b>】<br>
-       <b>説明</b>（メンバー固有の説明文）<br>
-       <b>レシーブ</b>：ディグの上手さ（安定感、精度）<br>
-       <b>セットアップ</b>：トスの上手さ（安定感、精度）<br>
-       <b>スパイク</b>：スパイクの上手さ（安定感、コントロール、パワー、得点力）<br>
-       <b>サーブ</b>：サーブの上手さ（安定感、コントロール、パワー、得点力）<br>
-       <b>高さ</b>：身長、ジャンプ、到達する高さを使いこなせているか<br>
+        <b>説明</b>（メンバー固有の説明文）<br>
+        <b>レシーブ</b>：ディグの上手さ（安定感、精度）<br>
+        <b>トス</b>：トス・セットアップの上手さ（安定感、精度）<br>
+        <b>スパイク</b>：スパイクの上手さ（安定感、コントロール、パワー、得点力）<br>
+        <b>サーブ</b>：サーブの上手さ（安定感、コントロール、パワー、得点力）<br>
+        <b>高さ</b>：身長、ジャンプ、到達する高さを使いこなせているか<br>
       </div>
       <a href="https://w-yoyaku-fujimi-city.seagulloffice.com/stagia/reserve/gin_menu">富士見市総合体育館予約ページ</a>
       <p style="color: darkgrey;font-size: xx-small;">画像はHADOランキングページ(例:D
@@ -38,7 +38,7 @@
         aria-haspopup="true" aria-expanded="false">並び替え</button>
       <ul class="dropdown-menu" id="sortDropDown">
         <li><button class="dropdown-item" value="1">レシーブ</button></li>
-        <li><button class="dropdown-item" value="2">セットアップ</button></li>
+        <li><button class="dropdown-item" value="2">トス</button></li>
         <li><button class="dropdown-item" value="3">スパイク</button></li>
         <li><button class="dropdown-item" value="4">サーブ</button></li>
         <li><button class="dropdown-item" value="5">高さ</button></li>
@@ -74,10 +74,8 @@
     init();
     setFunc()
 
-    var temp = '<div class="card"><img src="{img}" class="card-img-top cover" alt="メンバー1"><div class="card-body"><h5 class="card-title"><b>{name}【{合計}】</b></h5><p class="card-text">{info}</p><table class="table"><tbody><tr><th scope="row" style="width: 30%">レシーブ</th><td>{レシーブ}<div class="progress"><div class="progress-bar bg-success" role="progressbar" style="width: {レシーブ}%"></div></div></td></tr><tr><th scope="row">セットアップ</th><td>{セットアップ}<div class="progress"><div class="progress-bar bg-info" role="progressbar" style="width: {セットアップ}%"></div></div></td></tr><tr><th scope="row">スパイク</th><td>{スパイク}<div class="progress"><div class="progress-bar bg-warning" role="progressbar" style="width: {スパイク}%"></div></div></td></tr><tr><th scope="row">サーブ</th><td>{サーブ}<div class="progress"><div class="progress-bar" role="progressbar" style="width: {サーブ}%"></div></div></td></tr><tr><th scope="row">高さ</th><td>{高さ}<div class="progress"><div class="progress-bar bg-dark" role="progressbar" style="width: {高さ}%"></div></div></td></tr></tbody></table><p style = "color:lightgray">{date}</p></div></div>';
-    var output = document.getElementById("output");
+    var temp = '<div class="card"><img src="{img}" class="card-img-top cover" alt="メンバー1"><div class="card-body"><h5 class="card-title"><b>{name}【{合計}】</b></h5><p class="card-text">{info}</p><table class="table"><tbody><tr><th scope="row">レシーブ</th><td>{レシーブ}</td></tr><tr><th scope="row">トス</th><td>{トス}</td></tr><tr><th scope="row">スパイク</th><td>{スパイク}</td></tr><tr><th scope="row">サーブ</th><td>{サーブ}</td></tr><tr><th scope="row" style="width: 25%">高さ</th><td>{高さ}</td></tr></tbody></table><p style = "color:lightgray">{date}</p></div></div>';
     function parceStar(num) {
-      return num;
       var ret = num + " ";
       for (let index = 0; index < num; index++) {
         ret += "★";
@@ -111,7 +109,7 @@
         record.className = "col-md-4 mb-4";
         record.innerHTML = temp.replace(/{name}/g, mData[0])
         record.innerHTML = record.innerHTML.replace(/{レシーブ}/g, parceStar(mData[1]));
-        record.innerHTML = record.innerHTML.replace(/{セットアップ}/g, parceStar(mData[2]));
+        record.innerHTML = record.innerHTML.replace(/{トス}/g, parceStar(mData[2]));
         record.innerHTML = record.innerHTML.replace(/{スパイク}/g, parceStar(mData[3]));
         record.innerHTML = record.innerHTML.replace(/{サーブ}/g, parceStar(mData[4]));
         record.innerHTML = record.innerHTML.replace(/{高さ}/g, parceStar(mData[5]));
