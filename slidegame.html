@@ -16,13 +16,11 @@
 
         .tile {
             background-color: #ddd;
-            background-size: 100px;
             border: 1px solid black;
             font-size: 0px;
             text-align: center;
             line-height: 100px;
             cursor: pointer;
-
         }
     </style>
 </head>
@@ -69,6 +67,7 @@
                 nullTile = tile;
             } else {
                 tile.style.backgroundImage = 'url(https://hado-official.com/wp-content/uploads/' + imageFileName + ')';
+                var x = value - 1
                 const tileRow = Math.floor(x / GAME_SIZE);
                 const tileCol = x % GAME_SIZE;
                 tile.style.backgroundPosition = `-${tileCol * 700 / 4}px -${tileRow * 700 / 4}px`;
