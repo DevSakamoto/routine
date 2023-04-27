@@ -77,7 +77,7 @@
     init();
     setFunc()
 
-    var temp = '<div class="card"><img src="{img}" class="card-img-top cover" alt="メンバー1"><div class="card-body"><h5 class="card-title"><b>{name}【{合計}】</b></h5><p class="card-text">{info}</p><table class="table"><tbody><tr><th scope="row">レシーブ</th><td>{レシーブ}</td></tr><tr><th scope="row">トス</th><td>{トス}</td></tr><tr><th scope="row">スパイク</th><td>{スパイク}</td></tr><tr><th scope="row">サーブ</th><td>{サーブ}</td></tr><tr><th scope="row" style="width: 40%">高さ</th><td>{高さ}</td></tr></tbody></table><p style = "color:lightgray">{date}</p></div></div>';
+    var temp = '<div class="card"><img src="{img}" class="card-img-top cover" style="padding:5px;";><div class="card-body"><h5 class="card-title"><b>{name}【{合計}】</b></h5><p class="card-text">{info}</p><table class="table table-sm"><tbody><tr><th scope="row">レシーブ</th><td>{レシーブ}</td></tr><tr><th scope="row">トス</th><td>{トス}</td></tr><tr><th scope="row">スパイク</th><td>{スパイク}</td></tr><tr><th scope="row">サーブ</th><td>{サーブ}</td></tr><tr><th scope="row" style="width: 40%">高さ</th><td>{高さ}</td></tr></tbody></table><p style = "color:lightgray;font-size:8px">{date}</p></div></div>';
     function parceStar(num) {
       var ret = num + " ";
       for (let index = 0; index < num; index++) {
@@ -109,8 +109,9 @@
       for (let index = 0; index < loadData.length; index++) {
         var mData = loadData[index].split(",");
         var record = document.createElement("div");
-        record.className = "col-md-4 mb-4";
+        record.className = "col-md-3 mb-3";
         record.innerHTML = temp.replace(/{name}/g, mData[0])
+        record.style.padding = "5px";
         record.innerHTML = record.innerHTML.replace(/{レシーブ}/g, parceStar(mData[1]));
         record.innerHTML = record.innerHTML.replace(/{トス}/g, parceStar(mData[2]));
         record.innerHTML = record.innerHTML.replace(/{スパイク}/g, parceStar(mData[3]));
