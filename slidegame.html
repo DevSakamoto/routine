@@ -11,23 +11,29 @@
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             grid-template-rows: repeat(4, 1fr);
+
         }
 
         .tile {
             background-color: #ddd;
+            background-size: 100px;
             border: 1px solid black;
             font-size: 0px;
             text-align: center;
             line-height: 100px;
             cursor: pointer;
+
         }
     </style>
 </head>
 
 <body>
-    <div id="game-container">
-        <!-- ゲームのコンテンツをここに追加する -->
+    <div style="display: flex;justify-content: center;">
+        <div id="game-container">
+            <!-- ゲームのコンテンツをここに追加する -->
+        </div>
     </div>
+
 
     <!-- Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
@@ -35,7 +41,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script src="js/util.js"></script>
     <script>
-        const imgArr = ["direct_S4S4P1Y0.jpg","wachawacha_d.jpg","arcas_sho.jpg","dax_koto.jpg","arcas_ryu.jpg","unicorn_gutty.jpg","unicorn_yukipo.jpg","unicorn_nakajim.jpg","unicorn_r1o.jpg","ahirugumi_ruhia.jpg","dax_ree.jpg","yajyutobejo_moke.jpg","yajyutobejo_Jemmy.jpg","yajyutobejo_cocoa.jpg","laughmonsters_ottsuu.jpg","hibana_yone.jpg","hibana_zuumaa.jpg",]
+        const imgArr = ["direct_S4S4P1Y0.jpg", "wachawacha_d.jpg", "arcas_sho.jpg", "dax_koto.jpg", "arcas_ryu.jpg", "unicorn_gutty.jpg", "unicorn_yukipo.jpg", "unicorn_nakajim.jpg", "unicorn_r1o.jpg", "ahirugumi_ruhia.jpg", "dax_ree.jpg", "yajyutobejo_moke.jpg", "yajyutobejo_Jemmy.jpg", "yajyutobejo_cocoa.jpg", "laughmonsters_ottsuu.jpg", "hibana_yone.jpg", "hibana_zuumaa.jpg",]
         const randomIndex = Math.floor(Math.random() * imgArr.length);
         const imageFileName = imgArr[randomIndex]
         // ゲームのサイズ
@@ -54,19 +60,18 @@
 
         // ゲームのタイルを生成
         let tiles = tileValues.map((value) => {
-            
+
             const tile = document.createElement('div');
             tile.classList.add('tile');
             tile.textContent = value;
-            
-            if(value == null){
+
+            if (value == null) {
                 nullTile = tile;
-            }else{
-                tile.style.backgroundImage = 'url(https://hado-official.com/wp-content/uploads/'+imageFileName+')';
-                var x = value - 1
+            } else {
+                tile.style.backgroundImage = 'url(https://hado-official.com/wp-content/uploads/' + imageFileName + ')';
                 const tileRow = Math.floor(x / GAME_SIZE);
                 const tileCol = x % GAME_SIZE;
-                tile.style.backgroundPosition = `-${tileCol * 700/4}px -${tileRow * 700/4}px`;
+                tile.style.backgroundPosition = `-${tileCol * 700 / 4}px -${tileRow * 700 / 4}px`;
             }
             return tile;
         });
@@ -104,7 +109,7 @@
 
                     // ゲームがクリアされたかどうかを確認
                     if (isGameClear()) {
-                        alert('おめでとう！ゲームをクリアしました！'); 
+                        alert('おめでとう！ゲームをクリアしました！');
                     }
                 }
             });
@@ -119,7 +124,7 @@
             }
             return true;
         }
-        
+
     </script>
 </body>
 
