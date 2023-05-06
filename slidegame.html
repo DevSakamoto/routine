@@ -15,12 +15,30 @@
         }
 
         .tile {
-            background-color: #ddd;
+            background-color: #fff;
             border: 1px solid black;
             font-size: 0px;
             text-align: center;
             line-height: 100px;
             cursor: pointer;
+            transition: transform 0.1s ease;
+
+        }
+
+        .tile.slide-right {
+            transform: translateX(100%);
+        }
+
+        .tile.slide-left {
+            transform: translateX(-100%);
+        }
+
+        .tile.slide-up {
+            transform: translateY(-100%);
+        }
+
+        .tile.slide-down {
+            transform: translateY(100%);
         }
     </style>
 </head>
@@ -55,6 +73,14 @@
         let tileValues = Array.from({ length: NUM_TILES - 1 }, (_, i) => i + 1);
         tileValues.push(null); // null は空きスペースを表す
         var nullTile;
+        // 空のタイルの位置を取得
+        const getNullTilePosition = () => {
+        const nullIndex = tiles.indexOf(nullTile);
+        const nullRow = Math.floor(nullIndex / GAME_SIZE);
+        const nullCol = nullIndex % GAME_SIZE;
+        return [nullRow, nullCol];
+        };
+        
 
         // ゲームのタイルを生成
         let tiles = tileValues.map((value) => {
@@ -70,7 +96,7 @@
                 var x = value - 1
                 const tileRow = Math.floor(x / GAME_SIZE);
                 const tileCol = x % GAME_SIZE;
-                tile.style.backgroundPosition = `-${tileCol * 700 / 4}px -${tileRow * 700 / 4}px`;
+                tile.style.backgroundPosition = `-${tileCol * 700 / GAME_SIZE}px -${tileRow * 700 / GAME_SIZE}px`;
             }
             return tile;
         });
@@ -99,12 +125,9 @@
                     // タイルを移動
                     tiles[tileIndex] = nullTile;
                     tiles[nullIndex] = tile;
+                    moveTile(tile); // アニメーションを追加
 
-                    // ゲームの表示を更新
-                    gameContainer.innerHTML = '';
-                    tiles.forEach((tile) => {
-                        gameContainer.appendChild(tile);
-                    });
+
 
                     // ゲームがクリアされたかどうかを確認
                     if (isGameClear()) {
@@ -122,6 +145,37 @@
                 }
             }
             return true;
+        }
+        function moveTile(tile) {
+            const tileIndex = tiles.indexOf(tile);
+            const tileRow = Math.floor(tileIndex / GAME_SIZE);
+            const tileCol = tileIndex % GAME_SIZE;
+            const nullIndex = tiles.indexOf(nullTile);
+            const nullRow = Math.floor(nullIndex / GAME_SIZE);
+            const nullCol = nullIndex % GAME_SIZE;
+
+            // タイルを移動する方向を決定する
+            let direction;
+            if (tileRow === nullRow && tileCol > nullCol) {
+                direction = 'slide-right';
+            } else if (tileRow === nullRow && tileCol < nullCol) {
+                direction = 'slide-left';
+            } else if (tileCol === nullCol && tileRow > nullRow) {
+                direction = 'slide-down';
+            } else if (tileCol === nullCol && tileRow < nullRow) {
+                direction = 'slide-up';
+            }
+
+            // タイルを移動する
+            tile.classList.add(direction);
+            setTimeout(() => {
+                tile.classList.remove(direction);
+                // ゲームの表示を更新する
+                gameContainer.innerHTML = '';
+                tiles.forEach((tile) => {
+                    gameContainer.appendChild(tile);
+                });
+            }, 100);
         }
 
     </script>
