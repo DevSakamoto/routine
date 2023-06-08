@@ -9,16 +9,10 @@ const consoleOutput = document.getElementById("consoleOutput");
 const currentWorkLabel = document.getElementById("currentWorkLabel");
 const currentWorkDetailLabel = document.getElementById("currentWorkDetailLabel");
 const currentProgressBar = document.getElementById("currentProgressBar");
-
 const backBtn = document.getElementById("backBtn");
 const forwardBtn = document.getElementById("forwardBtn");
-
 const callOptionDropDown = document.getElementById("callOptionDropDown");
-
 const routineIdDropDown = document.getElementById("routineIdDropDown");
-
-
-
 
 var loadData;
 var timer = 0;
@@ -75,7 +69,6 @@ function indexControll(isBack) {
     workIndex = Math.max(0, workIndex);
     setWork();
 }
-
 
 function reload() {
 
@@ -160,9 +153,17 @@ function setUnit(obj) {
     _workArr.push(obj);
 
     const checkColumn = document.createElement("td");
-    checkColumn.innerHTML = '<label style="display:block; margin: 0;"><input type="checkbox"></label>';
+    checkColumn.innerHTML = '<label style="display:block; margin: 0;"><input id="input" type="checkbox" onchange="saveCheck(this)"></label>';
     checkColumn.style.textAlign = "center"
     checkColumn.style.fontSize= "2vmin";
+
+    // データの取得
+    const data = localStorage.getItem(obj["id"]+"-"+obj["no"]);
+    if(data != null){
+        const inputE = checkColumn.getElementsByTagName("input");
+        inputE[0].checked = data == "true"? true:false;
+    }
+    
 
     // const noColumn = document.createElement("td");
     // noColumn.innerText = _workArr.length//obj["no"];
@@ -199,6 +200,17 @@ function setUnit(obj) {
     _recordChildList.push(newRow)
     dataTable.tBodies[0].appendChild(newRow);
 }
+function saveCheck(event) {
+
+    speakFunc(event.checked);
+    var row = event.parentNode.parentNode.parentNode;
+    var rowIndex = _recordChildList.indexOf(row);
+    consoleAdd(rowIndex);
+    // データの保存
+    localStorage.setItem(_workArr[rowIndex]["id"]+"-"+_workArr[rowIndex]["no"], event.checked);
+
+}
+
 function deleteRow(button) {
     var row = button.parentNode;
     var rowIndex = _recordChildList.indexOf(row);
