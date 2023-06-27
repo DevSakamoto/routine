@@ -8,7 +8,7 @@
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
-  <title>複数のMP3再生</title>
+  <title>D＿DJ</title>
 
   <style>
     .container {
@@ -21,9 +21,6 @@
       font-weight: bold;
     }
 
-    .volume-slider {
-      margin-top: 20px;
-    }
 
     .audio-button {
       margin-top: 10px;
@@ -56,11 +53,11 @@
   <script src="js/util.js"></script>
 
   <script>
-    createHeader();
+    
     var currentAudio = null;
     var volumeSlider = null;
     var nowPlayingLabel = null;
-
+    createHeader();
     var audioButtons = [
       { audio: 'クリティウスの牙.mp3', name: 'クリティウスの牙' },
       { audio: '熱き決闘者たち.mp3', name: '熱き決闘者たち' },
@@ -118,7 +115,15 @@
       stopButton.textContent = "ストップ";
       stopButton.addEventListener('click', stopAudio);
       buttonContainer.appendChild(stopButton);
+      
     }
   </script>
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  
 </body>
 </html>
